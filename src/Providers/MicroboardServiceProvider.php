@@ -2,8 +2,8 @@
 
 namespace Microboard\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Microboard\Manager;
 
 class MicroboardServiceProvider extends ServiceProvider
 {
@@ -12,37 +12,59 @@ class MicroboardServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*
-         * Optional methods to load your package assets
-         */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'microboard');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'microboard');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
+        $this->registerPublishing();
+        $this->registerResources();
+    }
 
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../../config/config.php' => config_path('microboard.php'),
-            ], 'config');
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    protected function registerPublishing()
+    {
+        //
+    }
 
-            // Publishing the views.
-            /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/microboard'),
-            ], 'views');*/
+    /**
+     * Register the package resources such as routes, templates, etc.
+     *
+     * @return void
+     */
+    protected function registerResources()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'microboard');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'microboard');
+        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/microboard'));
 
-            // Publishing assets.
-            /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/microboard'),
-            ], 'assets');*/
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
-            // Publishing the translation files.
-            /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/microboard'),
-            ], 'lang');*/
+        $this->registerRoutes();
+    }
 
-            // Registering package commands.
-            // $this->commands([]);
-        }
+    /**
+     * Register the package routes.
+     *
+     * @return void
+     */
+    protected function registerRoutes()
+    {
+        Route::group([
+            'namespace' => 'Microboard\Http\Controllers',
+            'as' => 'microboard.',
+            'prefix' => config('microboard.path', 'admin'),
+            'middleware' => 'microboard',
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        });
+
+        Route::group([
+            'namespace' => 'Microboard\Http\Controllers\API',
+            'as' => 'microboard.api.',
+            'prefix' => 'microboard-api',
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+        });
     }
 
     /**
@@ -50,12 +72,6 @@ class MicroboardServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'microboard');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('microboard', function () {
-            return new Manager;
-        });
+        //
     }
 }

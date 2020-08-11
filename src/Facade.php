@@ -4,6 +4,10 @@ namespace Microboard;
 
 use Illuminate\Support\Facades\Facade as BaseFacade;
 
+/**
+ * @method static void resourcesIn(string $directory)
+ * @method static void cards(array $cards)
+ */
 class Facade extends BaseFacade
 {
     /**
@@ -13,6 +17,6 @@ class Facade extends BaseFacade
      */
     protected static function getFacadeAccessor()
     {
-        return 'microboard';
+        return 'Microboard';
     }
 }

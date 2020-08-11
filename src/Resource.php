@@ -2,7 +2,7 @@
 
 namespace Microboard;
 
-class Manager
+abstract class Resource
 {
     //
 }
