@@ -1,18 +1,17 @@
 <?php
 
-namespace Devnile\MicroboardV2\Tests;
+namespace MicroboardV2\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Devnile\MicroboardV2\MicroboardV2ServiceProvider;
+use Microboard\MicroboardServiceProvider;
 
 class ExampleTest extends TestCase
 {
-
     protected function getPackageProviders($app)
     {
-        return [MicroboardV2ServiceProvider::class];
+        return [MicroboardServiceProvider::class];
     }
-    
+
     /** @test */
     public function true_is_true()
     {

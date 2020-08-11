@@ -1,18 +1,13 @@
 {
-    "name": "devnile/microboard-v2",
+    "name": "devnile/microboard",
     "description": "This package creates to decrease working time that spent on admin panels",
-    "keywords": [
-        "devnile",
-        "microboard-v2"
-    ],
     "homepage": "https://github.com/devnile/microboard-v2",
     "license": "The Unlicense",
     "type": "library",
     "authors": [
         {
             "name": "Mohamed Ibrahem",
-            "email": "mohamed.ibrahim@devnile.com",
-            "role": "Developer"
+            "email": "mohamed.ibrahim@devnile.com"
         }
     ],
     "require": {
@@ -25,12 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Devnile\\MicroboardV2\\": "src"
+            "Microboard\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Devnile\\MicroboardV2\\Tests\\": "tests"
+            "Microboard\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,10 +39,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Devnile\\MicroboardV2\\MicroboardV2ServiceProvider"
+                "Microboard\\Providers\\MicroboardServiceProvider"
             ],
             "aliases": {
-                "MicroboardV2": "Devnile\\MicroboardV2\\MicroboardV2Facade"
+                "Microboard": "Microboard\\Facade"
             }
         }
     }
