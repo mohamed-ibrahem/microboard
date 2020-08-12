@@ -3,13 +3,13 @@
 namespace MicroboardV2\Tests;
 
 use Orchestra\Testbench\TestCase;
-use Microboard\MicroboardServiceProvider;
+use Microboard\Providers\MicroboardCoreServiceProvider;
 
 class ExampleTest extends TestCase
 {
     protected function getPackageProviders($app)
     {
-        return [MicroboardServiceProvider::class];
+        return [MicroboardCoreServiceProvider::class];
     }
 
     /** @test */

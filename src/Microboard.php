@@ -61,6 +61,19 @@ class Microboard
     }
 
     /**
+     * Get the resource class name for a given key.
+     *
+     * @param  string  $key
+     * @return string
+     */
+    public function resourceForKey($key)
+    {
+        return collect($this->resources)->first(function ($value) use ($key) {
+            return $value::uriKey() === $key;
+        });
+    }
+
+    /**
      * @param array $cards
      * @return Microboard
      */

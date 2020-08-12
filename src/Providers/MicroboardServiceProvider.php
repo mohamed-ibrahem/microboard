@@ -12,7 +12,12 @@ class MicroboardServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPublishing();
+        if ($this->app->runningInConsole()) {
+            $this->registerPublishing();
+
+            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        }
+
         $this->registerResources();
     }
 
@@ -36,8 +41,6 @@ class MicroboardServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'microboard');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'microboard');
         $this->loadJsonTranslationsFrom(resource_path('lang/vendor/microboard'));
-
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         $this->registerRoutes();
     }

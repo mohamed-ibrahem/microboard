@@ -12,9 +12,7 @@ class MicroboardCoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->app->register(MicroboardServiceProvider::class);
-        }
+        $this->app->register(MicroboardServiceProvider::class);
 
         if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'microboard');

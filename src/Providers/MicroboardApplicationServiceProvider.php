@@ -15,7 +15,7 @@ class MicroboardApplicationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerExceptionHandler();
+        // $this->registerExceptionHandler();
         $this->resources();
         // $this->authorization(); // TODO:: make it real.
          Microboard::cards($this->cards());

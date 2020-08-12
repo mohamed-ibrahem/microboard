@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Facade as BaseFacade;
 /**
  * @method static void resourcesIn(string $directory)
  * @method static void cards(array $cards)
+ * @method static Resource resourceForKey(string $resource)
  */
 class Facade extends BaseFacade
 {
