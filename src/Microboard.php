@@ -2,6 +2,7 @@
 
 namespace Microboard;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
@@ -12,21 +13,15 @@ class Microboard
     /**
      * @var array
      */
-    protected $resources = [];
-
-    /**
-     * @var array
-     */
-    protected $cards = [];
+    protected static $resources = [];
 
     /**
      * @param $directory
      * @throws ReflectionException
      */
-    public function resourcesIn($directory)
+    public static function resourcesIn($directory)
     {
         $namespace = app()->getNamespace();
-
         $resources = [];
 
         foreach ((new Finder)->in($directory)->files() as $resource) {
@@ -42,7 +37,7 @@ class Microboard
             }
         }
 
-        $this->resources(
+        static::resources(
             collect($resources)->sort()->all()
         );
     }
@@ -51,39 +46,48 @@ class Microboard
      * @param array $resources
      * @return Microboard
      */
-    public function resources(array $resources)
+    public static function resources(array $resources)
     {
-        $this->resources = array_unique(
-            array_merge($this->resources, $resources)
+        static::$resources = array_unique(
+            array_merge(static::$resources, $resources)
         );
 
-        return $this;
+        return new static;
+    }
+
+    public static function resourceCollection()
+    {
+        return collect(static::$resources);
     }
 
     /**
-     * Get the resource class name for a given key.
-     *
-     * @param  string  $key
-     * @return string
+     * @return Collection
      */
-    public function resourceForKey($key)
+    public static function availableResources()
     {
-        return collect($this->resources)->first(function ($value) use ($key) {
-            return $value::uriKey() === $key;
+        return static::resourceCollection()->filter(function($resource) {
+            return $resource::availableForNavigation();
         });
     }
 
     /**
-     * @param array $cards
-     * @return Microboard
+     * @param string $uri
+     * @return string
      */
-    public function cards(array $cards)
+    public static function resourceForKey($uri)
     {
-        $this->cards = array_merge(
-            $this->cards,
-            $cards
-        );
+        return static::resourceCollection()->first(function($resource) use($uri) {
+            return $resource::uriKey() === $uri;
+        });
+    }
 
-        return $this;
+    /**
+     * Get the URI path prefix utilized by Nova.
+     *
+     * @return string
+     */
+    public static function path()
+    {
+        return config('microboard.path', '/admin');
     }
 }
