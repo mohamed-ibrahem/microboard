@@ -55,12 +55,19 @@ class Microboard
         return new static;
     }
 
+    /**
+     * Make collection of registered resources
+     *
+     * @return Collection
+     */
     public static function resourceCollection()
     {
         return collect(static::$resources);
     }
 
     /**
+     * Return available resources for navigation
+     *
      * @return Collection
      */
     public static function availableResources()
