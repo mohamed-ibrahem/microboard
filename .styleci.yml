@@ -1,5 +1,1 @@
-php:
-    preset: laravel
-    disabled:
-        - unused_use
-        - single_class_element_per_statement
+preset: laravel
