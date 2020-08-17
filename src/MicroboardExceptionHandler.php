@@ -2,7 +2,7 @@
 
 namespace Microboard;
 
-use NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class MicroboardExceptionHandler extends ExceptionHandler
 {
