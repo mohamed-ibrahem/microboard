@@ -4,6 +4,7 @@ namespace Microboard\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Microboard\Microboard;
 
 class MicroboardServiceProvider extends ServiceProvider
 {
@@ -39,8 +40,8 @@ class MicroboardServiceProvider extends ServiceProvider
     protected function registerResources()
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'microboard');
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'microboard');
-        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/microboard'));
+        // $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'microboard');
+        // $this->loadJsonTranslationsFrom(resource_path('lang/vendor/microboard'));
 
         $this->registerRoutes();
     }
@@ -55,7 +56,7 @@ class MicroboardServiceProvider extends ServiceProvider
         Route::group([
             'namespace' => 'Microboard\Http\Controllers',
             'as' => 'microboard.',
-            'prefix' => config('microboard.path', 'admin'),
+            'prefix' => Microboard::path(),
             'middleware' => 'microboard',
         ], function () {
             $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');

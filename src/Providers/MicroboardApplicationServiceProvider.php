@@ -5,7 +5,7 @@ namespace Microboard\Providers;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Microboard\Facade as Microboard;
+use Microboard\Microboard;
 use Microboard\MicroboardExceptionHandler;
 
 class MicroboardApplicationServiceProvider extends ServiceProvider
@@ -18,7 +18,6 @@ class MicroboardApplicationServiceProvider extends ServiceProvider
         // $this->registerExceptionHandler();
         $this->resources();
         // $this->authorization(); // TODO:: make it real.
-         Microboard::cards($this->cards());
     }
 
     /**
@@ -50,7 +49,7 @@ class MicroboardApplicationServiceProvider extends ServiceProvider
     protected function authorization()
     {
         Gate::define('viewMicroboard', function ($user) {
-            return $user->permissions()->contains('viewMicroboard');
+            // return $user->permissions()->contains('viewMicroboard');
         });
     }
 
@@ -69,6 +68,6 @@ class MicroboardApplicationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(ViewServiceProvider::class);
     }
 }
