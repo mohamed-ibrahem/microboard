@@ -2,13 +2,27 @@
 
 namespace Microboard;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Microboard\Http\Requests\MicroboardRequest;
 
 abstract class Resource
 {
+    #// model/resource
+    // label
+    // displayInNavigation
+    // group
+    // icon
+    // title field
+    #// fields
+    // cards
+    // db queries
+    // with
+    // search
+    // per page options
+
     /**
      * The underlying model resource instance.
      *
@@ -17,11 +31,11 @@ abstract class Resource
     public $resource;
 
     /**
-     * The single value that should be used to represent the resource when being displayed.
+     * Indicates if the resource should be displayed in the sidebar.
      *
-     * @var string
+     * @var bool
      */
-    public static $title = 'id';
+    public static $displayInNavigation = true;
 
     /**
      * The relationships that should be eager loaded when performing an index query.
@@ -38,17 +52,16 @@ abstract class Resource
     public static $search = [];
 
     /**
-     * Indicates if the resource should be displayed in the sidebar.
+     * The per-page options used the resource index.
      *
-     * @var bool
+     * @var array
      */
-    public static $displayInNavigation = true;
+    public static $perPageOptions = [1, 25, 50, 100];
 
     /**
-     * Create a new resource instance.
+     * Resource constructor.
      *
-     * @param  Model  $resource
-     * @return void
+     * @param Model $resource
      */
     public function __construct($resource)
     {
@@ -64,16 +77,6 @@ abstract class Resource
     abstract public function fields(Request $request);
 
     /**
-     * Get the underlying model instance for the resource.
-     *
-     * @return Model
-     */
-    public function model()
-    {
-        return $this->resource;
-    }
-
-    /**
      * Get the displayable label of the resource.
      *
      * @return string
@@ -84,35 +87,45 @@ abstract class Resource
     }
 
     /**
-     * Get the displayable singular label of the resource.
+     * Get the icon of the resource.
      *
      * @return string
      */
-    public static function singularLabel()
+    public static function icon()
     {
-        return Str::singular(static::label());
+        return 'fa fa-database text-primary';
     }
 
     /**
-     * Get the value that should be displayed to represent the resource.
+     * Determine if this resource is available for navigation.
      *
-     * @return string
+     * @return bool
      */
-    public function title()
+    public static function availableForNavigation()
     {
-        return $this->{static::$title};
+        return static::$displayInNavigation;
     }
 
     /**
-     * Get a fresh instance of the model represented by the resource.
+     * The pagination per-page options configured for this resource.
      *
-     * @return mixed
+     * @return array
      */
-    public static function newModel()
+    public static function perPageOptions()
     {
-        $model = static::$model;
+        return static::$perPageOptions;
+    }
 
-        return new $model;
+    /**
+     * Get the searchable columns for the resource.
+     *
+     * @return array
+     */
+    public static function searchableColumns()
+    {
+        return empty(static::$search)
+            ? [static::newModel()->getKeyName()]
+            : static::$search;
     }
 
     /**
@@ -126,47 +139,103 @@ abstract class Resource
     }
 
     /**
-     * Return the location to redirect the user after creation.
-     *
-     * @param  MicroboardRequest  $request
-     * @param  Resource  $resource
-     * @return string
+     * @param array $sort
+     * @param int $perPage
+     * @param string $search
+     * @return Builder
      */
-    public static function redirectAfterCreate(MicroboardRequest $request, $resource)
+    public static function buildIndexQuery($sort, $perPage, $search)
     {
-        return '/resources/'.static::uriKey().'/'.$resource->getKey();
+        return static::applyOrdering(
+            static::applySearch(
+                static::newModel()->newQuery()->with(static::$with),
+                $search
+            ), $sort[0], $sort[1])->tap(function ($query) use ($perPage) {
+            return $query->paginate($perPage);
+        });
     }
 
     /**
-     * Return the location to redirect the user after update.
-     *
-     * @param  MicroboardRequest  $request
-     * @param  Resource  $resource
-     * @return string
+     * @param Builder $query
+     * @param string $field
+     * @param bool $asc
+     * @return Builder
      */
-    public static function redirectAfterUpdate(MicroboardRequest $request, $resource)
+    public static function applyOrdering($query, $field, $asc = true)
     {
-        return '/resources/'.static::uriKey().'/'.$resource->getKey();
+        if (! $field) {
+            return $query;
+        }
+
+        return $query->orderBy($field, $asc ? 'asc' : 'desc');
     }
 
     /**
-     * Return the location to redirect the user after deletion.
+     * Apply the search query to the query.
      *
-     * @param  MicroboardRequest  $request
-     * @return string
+     * @param Builder $query
+     * @param string $search
+     * @return Builder
      */
-    public static function redirectAfterDelete(MicroboardRequest $request)
+    public static function applySearch($query, $search)
     {
-        return '/resources/'.static::uriKey();
+        if (! $search) {
+            return $query;
+        }
+
+        return $query->where(function ($query) use ($search) {
+            $model = $query->getModel();
+
+            foreach (static::searchableColumns() as $column) {
+                $query->orWhere($model->qualifyColumn($column), 'LIKE', '%' . $search . '%');
+            }
+        });
     }
 
     /**
-     * Return a fresh resource instance.
-     *
-     * @return Resource
+     * @return Model
      */
-    protected static function newResource()
+    public static function newModel()
     {
-        return new static(static::newModel());
+        $model = static::$model;
+
+        return new $model;
+    }
+
+    /**
+     * @param Request $request
+     * @return Collection
+     */
+    public function indexFields(Request $request)
+    {
+        return collect($this->fields($request))
+            ->each(function ($field) {
+                $field->resolveForDisplay($this->resource);
+            });
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function serializeForIndex(Request $request)
+    {
+        $fields = $this->indexFields($request);
+
+        return [
+            // 'id' => $fields->whereInstanceOf('ID')->first(),
+            'fields' => $fields->all(),
+        ];
+    }
+
+    /**
+     * Dynamically get properties from the underlying resource.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->resource->{$key};
     }
 }
