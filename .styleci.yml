@@ -3,8 +3,3 @@ php:
     disabled:
         - unused_use
         - single_class_element_per_statement
-js:
-    finder:
-        not-name:
-            - webpack.mix.js
-css: true
