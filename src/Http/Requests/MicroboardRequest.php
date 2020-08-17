@@ -2,11 +2,8 @@
 
 namespace Microboard\Http\Requests;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
-use Microboard\Facade as Microboard;
-use Microboard\Resource;
+use Microboard\Microboard;
 
 class MicroboardRequest extends FormRequest
 {
@@ -32,8 +29,6 @@ class MicroboardRequest extends FormRequest
         ];
     }
 
-
-
     /**
      * Get the class name of the resource being requested.
      *
@@ -43,102 +38,6 @@ class MicroboardRequest extends FormRequest
     {
         return tap(Microboard::resourceForKey($this->route('resource')), function ($resource) {
             abort_if(is_null($resource), 404);
-            // abort_if(! $resource::authorizedToViewAny($this), 403);
         });
-    }
-
-    /**
-     * Get a new instance of the resource being requested.
-     *
-     * @return Resource
-     */
-    public function newResource()
-    {
-        $resource = $this->resource();
-        return new $resource($this->model());
-    }
-
-    /**
-     * Find the resource model instance for the request.
-     *
-     * @param  mixed|null  $resourceId
-     * @return Resource
-     */
-    public function findResourceOrFail($resourceId = null)
-    {
-        return $this->newResourceWith($this->findModelOrFail($resourceId));
-    }
-
-    /**
-     * Find the model instance for the request.
-     *
-     * @param  mixed|null  $resourceId
-     * @return Model
-     */
-    public function findModelOrFail($resourceId = null)
-    {
-        if ($resourceId) {
-            return $this->findModelQuery($resourceId)->firstOrFail();
-        }
-
-        return once(function () {
-            return $this->findModelQuery()->firstOrFail();
-        });
-    }
-
-    /**
-     * Get the query to find the model instance for the request.
-     *
-     * @param  mixed|null  $resourceId
-     * @return Builder
-     */
-    public function findModelQuery($resourceId = null)
-    {
-        return $this->newQueryWithoutScopes()->whereKey(
-            $resourceId ?? $this->resourceId
-        );
-    }
-
-    /**
-     * Get a new instance of the resource being requested.
-     *
-     * @param Model $model
-     * @return Resource
-     */
-    public function newResourceWith($model)
-    {
-        $resource = $this->resource();
-        return new $resource($model);
-    }
-
-    /**
-     * Get a new query builder for the underlying model.
-     *
-     * @return Builder
-     */
-    public function newQuery()
-    {
-        return $this->model()->newQuery();
-    }
-
-    /**
-     * Get a new, scopeless query builder for the underlying model.
-     *
-     * @return Builder
-     */
-    public function newQueryWithoutScopes()
-    {
-        return $this->model()->newQueryWithoutScopes();
-    }
-
-    /**
-     * Get a new instance of the underlying model.
-     *
-     * @return Model
-     */
-    public function model()
-    {
-        $resource = $this->resource();
-        return $resource::newModel();
     }
 }
