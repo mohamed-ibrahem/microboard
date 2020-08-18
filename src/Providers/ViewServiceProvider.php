@@ -34,7 +34,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::components([
             'argon' => ArgonLayout::class,
             'app' => AppLayout::class,
-            'navbar' => Navbar::class
+            'navbar' => Navbar::class,
         ], 'microboard');
 
         return $this;
