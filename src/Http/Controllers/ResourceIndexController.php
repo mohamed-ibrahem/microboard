@@ -13,7 +13,7 @@ class ResourceIndexController extends Controller
         return view('microboard::resource.index', [
             'resource' => $resource,
             'label' => $resource::label(),
-            'authorizedToCreate' => true
+            'authorizedToCreate' => true,
         ]);
     }
 }

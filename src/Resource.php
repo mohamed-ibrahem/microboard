@@ -10,13 +10,13 @@ use Illuminate\Support\Str;
 
 abstract class Resource
 {
-    #// model/resource
+    //// model/resource
     // label
     // displayInNavigation
     // group
     // icon
     // title field
-    #// fields
+    //// fields
     // cards
     // db queries
     // with
@@ -151,8 +151,8 @@ abstract class Resource
                 static::newModel()->newQuery()->with(static::$with),
                 $search
             ), $sort[0], $sort[1])->tap(function ($query) use ($perPage) {
-            return $query->paginate($perPage);
-        });
+                return $query->paginate($perPage);
+            });
     }
 
     /**
@@ -187,7 +187,7 @@ abstract class Resource
             $model = $query->getModel();
 
             foreach (static::searchableColumns() as $column) {
-                $query->orWhere($model->qualifyColumn($column), 'LIKE', '%' . $search . '%');
+                $query->orWhere($model->qualifyColumn($column), 'LIKE', '%'.$search.'%');
             }
         });
     }

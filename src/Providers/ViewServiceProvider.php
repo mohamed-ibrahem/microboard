@@ -33,7 +33,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         Blade::components([
             'argon' => ArgonLayout::class,
-            'app' => AppLayout::class
+            'app' => AppLayout::class,
         ], 'microboard');
 
         return $this;

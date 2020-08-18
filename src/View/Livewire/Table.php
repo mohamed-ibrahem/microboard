@@ -48,7 +48,7 @@ class Table extends Component
         'search' => ['except' => ''],
         'perPage' => ['except' => 25],
         'ascSorting' => ['except' => 1],
-        'sortField'
+        'sortField',
     ];
 
     /**
@@ -77,7 +77,7 @@ class Table extends Component
      */
     public function sortBy($field)
     {
-        $this->ascSorting = (int)($this->sortField === $field ? !$this->ascSorting : true);
+        $this->ascSorting = (int) ($this->sortField === $field ? ! $this->ascSorting : true);
         $this->sortField = $field;
     }
 
@@ -87,7 +87,7 @@ class Table extends Component
     public function render()
     {
         return view('microboard::livewire.table', [
-            'resources' => $this->getResources()
+            'resources' => $this->getResources(),
         ]);
     }
 
@@ -100,7 +100,7 @@ class Table extends Component
 
         return tap(
             $resource::buildIndexQuery(
-                [$this->sortField, (bool)$this->ascSorting],
+                [$this->sortField, (bool) $this->ascSorting],
                 $this->perPage,
                 $this->search
             ),

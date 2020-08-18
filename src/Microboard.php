@@ -25,14 +25,14 @@ class Microboard
         $resources = [];
 
         foreach ((new Finder)->in($directory)->files() as $resource) {
-            $resource = $namespace . str_replace(
+            $resource = $namespace.str_replace(
                     ['/', '.php'],
                     ['\\', ''],
-                    Str::after($resource->getPathname(), app_path() . DIRECTORY_SEPARATOR)
+                    Str::after($resource->getPathname(), app_path().DIRECTORY_SEPARATOR)
                 );
 
             if (is_subclass_of($resource, Resource::class) &&
-                !(new ReflectionClass($resource))->isAbstract()) {
+                ! (new ReflectionClass($resource))->isAbstract()) {
                 $resources[] = $resource;
             }
         }
@@ -56,7 +56,7 @@ class Microboard
     }
 
     /**
-     * Make collection of registered resources
+     * Make collection of registered resources.
      *
      * @return Collection
      */
@@ -66,7 +66,7 @@ class Microboard
     }
 
     /**
-     * Return available resources for navigation
+     * Return available resources for navigation.
      *
      * @return Collection
      */

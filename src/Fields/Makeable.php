@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Microboard\Fields;
-
 
 trait Makeable
 {
