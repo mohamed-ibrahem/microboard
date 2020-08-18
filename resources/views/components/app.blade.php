@@ -33,7 +33,7 @@
         <!-- Top nav -->
         <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
             <div class="container-fluid">
-                @livewire ('navbar', ['title' => $title])
+                <x-microboard-navbar :title="$title"></x-microboard-navbar>
             </div>
         </nav>
 

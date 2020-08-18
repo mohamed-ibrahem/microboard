@@ -1,9 +1,9 @@
 <?php
 
-namespace Microboard\View\Livewire;
+namespace Microboard\View\Components;
 
+use Illuminate\View\Component;
 use Illuminate\View\View;
-use Livewire\Component;
 
 class Navbar extends Component
 {
@@ -13,9 +13,11 @@ class Navbar extends Component
     public $title;
 
     /**
+     * Navbar constructor.
+     *
      * @param string $title
      */
-    public function mount($title)
+    public function __construct(string $title)
     {
         $this->title = $title;
     }
@@ -27,6 +29,6 @@ class Navbar extends Component
      */
     public function render()
     {
-        return view('microboard::livewire.navbar');
+        return view('microboard::components.navbar');
     }
 }
