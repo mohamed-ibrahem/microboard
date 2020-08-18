@@ -150,9 +150,12 @@ abstract class Resource
             static::applySearch(
                 static::newModel()->newQuery()->with(static::$with),
                 $search
-            ), $sort[0], $sort[1])->tap(function ($query) use ($perPage) {
-                return $query->paginate($perPage);
-            });
+            ),
+            $sort[0],
+            $sort[1]
+        )->tap(function ($query) use ($perPage) {
+            return $query->paginate($perPage);
+        });
     }
 
     /**
@@ -187,7 +190,7 @@ abstract class Resource
             $model = $query->getModel();
 
             foreach (static::searchableColumns() as $column) {
-                $query->orWhere($model->qualifyColumn($column), 'LIKE', '%'.$search.'%');
+                $query->orWhere($model->qualifyColumn($column), 'LIKE', '%' . $search . '%');
             }
         });
     }

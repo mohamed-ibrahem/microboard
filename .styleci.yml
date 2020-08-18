@@ -1,6 +1,12 @@
 preset: laravel
+
 finder:
     exclude:
         - "tests"
     name:
         - "*.php"
+
+disabled:
+    - concat_without_spaces
+    - cast_spaces
+    - binary_operator_spaces
