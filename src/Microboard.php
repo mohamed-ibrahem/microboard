@@ -32,7 +32,7 @@ class Microboard
                 );
 
             if (is_subclass_of($resource, Resource::class) &&
-                !(new ReflectionClass($resource))->isAbstract()) {
+                ! (new ReflectionClass($resource))->isAbstract()) {
                 $resources[] = $resource;
             }
         }

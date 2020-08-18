@@ -35,7 +35,7 @@ abstract class Field
     /**
      * The resource associated with the field.
      *
-     * @var Resource|null
+     * @var resource|null
      */
     public $resource;
 
@@ -93,7 +93,7 @@ abstract class Field
             return;
         }
 
-        if (!$this->resolveCallback) {
+        if (! $this->resolveCallback) {
             $this->value = $this->resolveAttribute($resource, $attribute);
         } elseif (is_callable($this->resolveCallback)) {
             tap($this->resolveAttribute($resource, $attribute), function ($value) use ($resource, $attribute) {

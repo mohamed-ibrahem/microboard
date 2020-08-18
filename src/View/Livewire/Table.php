@@ -77,7 +77,7 @@ class Table extends Component
      */
     public function sortBy($field)
     {
-        $this->ascSorting = (int)($this->sortField === $field ? !$this->ascSorting : true);
+        $this->ascSorting = (int)($this->sortField === $field ? ! $this->ascSorting : true);
         $this->sortField = $field;
     }
 
