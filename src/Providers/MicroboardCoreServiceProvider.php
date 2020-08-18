@@ -14,8 +14,8 @@ class MicroboardCoreServiceProvider extends ServiceProvider
     {
         $this->app->register(MicroboardServiceProvider::class);
 
-        if (! $this->app->configurationIsCached()) {
-            $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'microboard');
+        if (!$this->app->configurationIsCached()) {
+            $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'microboard');
         }
 
         Route::middlewareGroup('microboard', config('microboard.middleware', []));

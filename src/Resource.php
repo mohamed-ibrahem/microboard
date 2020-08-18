@@ -163,7 +163,7 @@ abstract class Resource
      */
     public static function applyOrdering($query, $field, $asc = true)
     {
-        if (! $field) {
+        if (!$field) {
             return $query;
         }
 
@@ -179,7 +179,7 @@ abstract class Resource
      */
     public static function applySearch($query, $search)
     {
-        if (! $search) {
+        if (!$search) {
             return $query;
         }
 

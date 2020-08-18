@@ -72,7 +72,7 @@ class Microboard
      */
     public static function availableResources()
     {
-        return static::resourceCollection()->filter(function($resource) {
+        return static::resourceCollection()->filter(function ($resource) {
             return $resource::availableForNavigation();
         });
     }
@@ -83,7 +83,7 @@ class Microboard
      */
     public static function resourceForKey($uri)
     {
-        return static::resourceCollection()->first(function($resource) use($uri) {
+        return static::resourceCollection()->first(function ($resource) use ($uri) {
             return $resource::uriKey() === $uri;
         });
     }
