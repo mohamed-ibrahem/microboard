@@ -5,7 +5,6 @@ namespace Microboard\Fields;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Microboard\Resource;
 
 abstract class Field
 {
@@ -35,7 +34,7 @@ abstract class Field
     /**
      * The resource associated with the field.
      *
-     * @var Resource|null
+     * @var \Microboard\Resource
      */
     public $resource;
 
@@ -93,7 +92,7 @@ abstract class Field
             return;
         }
 
-        if (!$this->resolveCallback) {
+        if (! $this->resolveCallback) {
             $this->value = $this->resolveAttribute($resource, $attribute);
         } elseif (is_callable($this->resolveCallback)) {
             tap($this->resolveAttribute($resource, $attribute), function ($value) use ($resource, $attribute) {
