@@ -1,11 +1,12 @@
 <?php
 
-namespace Microboard\Tests;
+namespace Microboard\Tests\Unit;
 
 use Microboard\Microboard;
-use Microboard\Tests\Microboard\User;
+use Microboard\Tests\Fixtures\User;
+use Microboard\Tests\IntegrationTest;
 
-class MicroboardTest extends TestCase
+class MicroboardTest extends IntegrationTest
 {
     /** @test **/
     function it_loads_resources()

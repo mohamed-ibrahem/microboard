@@ -1,6 +1,6 @@
 <?php
 
-namespace Microboard\Tests\Microboard;
+namespace Microboard\Tests\Fixtures;
 
 use App\User as Model;
 use Illuminate\Http\Request;
