@@ -16,7 +16,7 @@ class MicroboardServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->registerPublishing();
 
-            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
 
         $this->registerResources();
@@ -39,7 +39,7 @@ class MicroboardServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'microboard');
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'microboard');
         // $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'microboard');
         // $this->loadJsonTranslationsFrom(resource_path('lang/vendor/microboard'));
 
@@ -59,7 +59,7 @@ class MicroboardServiceProvider extends ServiceProvider
             'prefix' => Microboard::path(),
             'middleware' => 'microboard',
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
         });
 
         Route::group([
@@ -67,7 +67,7 @@ class MicroboardServiceProvider extends ServiceProvider
             'as' => 'microboard.api.',
             'prefix' => 'microboard-api',
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+            $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
         });
     }
 
