@@ -24,7 +24,7 @@ class SidebarLinks extends Component
             return [
                 'text' => $resource::label(),
                 'icon' => $resource::icon(),
-                'url' => Microboard::path() . '/' . $resource::uriKey(),
+                'url' => route('microboard.resource.index', $resource::uriKey()),
             ];
         })->all();
     }
