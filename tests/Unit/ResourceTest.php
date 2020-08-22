@@ -2,20 +2,20 @@
 
 namespace Microboard\Tests\Unit;
 
-use Microboard\Tests\Fixtures\User;
+use Microboard\Tests\Fixtures\UserResource;
 use Microboard\Tests\IntegrationTest;
 
 class ResourceTest extends IntegrationTest
 {
-    /** @test **/
+    /** @test */
     function it_makes_a_uri_key()
     {
-        $this->assertEquals('users', User::uriKey());
+        $this->assertEquals('users', UserResource::uriKey());
     }
 
-    /** @test **/
+    /** @test */
     function it_makes_a_label()
     {
-        $this->assertEquals('Users', User::label());
+        $this->assertEquals('Users', UserResource::label());
     }
 }

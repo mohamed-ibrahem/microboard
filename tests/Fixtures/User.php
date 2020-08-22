@@ -2,30 +2,38 @@
 
 namespace Microboard\Tests\Fixtures;
 
-use App\User as Model;
-use Illuminate\Http\Request;
-use Microboard\Fields\ID;
-use Microboard\Fields\Text;
-use Microboard\Resource;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Resource
+class User extends Authenticatable
 {
-    /**
-     * @var string
-     */
-    public static $model = Model::class;
+    use Notifiable;
 
     /**
-     * @param Request $request
-     * @return array
+     * The attributes that are mass assignable.
+     *
+     * @var array
      */
-    public function fields(Request $request)
-    {
-        return [
-            ID::make(),
-//            Avatar::make('avatar'),
-            Text::make('Name'),
-            Text::make('Email'),
-        ];
-    }
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
