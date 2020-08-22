@@ -21,11 +21,17 @@ class UserResource extends Resource
         'id', 'name'
     ];
 
+    /**
+     * @return string
+     */
     public static function label()
     {
         return 'Users';
     }
 
+    /**
+     * @return string
+     */
     public static function uriKey()
     {
         return 'users';
