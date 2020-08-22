@@ -2,7 +2,7 @@
     @if(config('microboard.view.enable_global_search'))
         @livewire('global-search')
     @else
-        <h6 class="h2 d-inline-block mb-0 text-white">{{ $title }}</h6>
+        <h6 class="h2 d-inline-block mb-0 text-white">@yield('title')</h6>
 @endif
 
 <!-- Navbar links -->

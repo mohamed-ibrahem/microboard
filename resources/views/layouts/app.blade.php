@@ -1,6 +1,8 @@
-<x-microboard-argon :title="$title">
+@extends('microboard::layouts.argon')
+
+@section('argon-content')
     <!-- Sidenav -->
-    <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <nav class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white" id="main-side-nav">
         <div class="scrollbar-inner">
             <!-- Brand -->
             <div class="sidenav-header d-flex align-items-center">
@@ -9,7 +11,7 @@
                 <div class="ml-auto">
                     <!-- Sidenav toggler -->
                     <div class="sidenav-toggler d-none d-xl-block" data-action="sidenav-unpin"
-                         data-target="#sidenav-main">
+                         data-target="#main-side-nav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
                             <i class="sidenav-toggler-line"></i>
@@ -33,7 +35,7 @@
         <!-- Top nav -->
         <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
             <div class="container-fluid">
-                <x-microboard-navbar :title="$title"></x-microboard-navbar>
+                @include ('microboard::partials.navbar')
             </div>
         </nav>
 
@@ -43,14 +45,14 @@
                 <div class="header-body">
                     <div class="row align-items-center py-4">
                         <div class="col-lg-8 col-12">
-                            @if(config('microboard.view.enable_global_search'))
-                                <h6 class="h2 d-inline-block mb-0 text-white">{{ $title }}</h6>
+                            @if(config('microboard.view.enable_global_search', true))
+                                <h6 class="h2 d-inline-block mb-0 text-white">@yield('title')</h6>
                             @endif
 
                             @includeWhen(config('microboard.view.enable_breadcrumbs', true), 'microboard::partials.breadcrumb')
                         </div>
                         <div class="col-lg-4 col-12 text-right">
-                            {{ $actions ?? '' }}
+                            @yield('actions')
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
 
         <!-- Page content -->
         <div class="container-fluid mt--6">
-            {{ $slot }}
+            @yield('content')
 
             <footer class="footer pt-0">
                 <small class="d-block copyright text-center text-muted">
@@ -71,4 +73,4 @@
             </footer>
         </div>
     </div>
-</x-microboard-argon>
+@endsection

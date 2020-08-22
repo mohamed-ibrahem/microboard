@@ -1,10 +1,12 @@
-<!doctype html>
+<!--
+-- Package: Argon dashboard
+-- Created by: Mohamed Ibrahim <mohamed.ibrahim@devnile.com>
+--><!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>{{ $title ?? 'Not working!' }}</title>
+    <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="This package created to decrease working time that spent on admin panels">
     <meta name="author" content="Mohamed Ibrahim, Devnile">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Icons -->
@@ -17,8 +19,7 @@
     <link rel="stylesheet" href="{{ mix('css/argon.css', 'vendor/microboard') }}">
 </head>
 <body>
-{{ $slot }}
-
+@yield('argon-content')
 <!-- Argon Scripts -->
 <script src="{{ asset('vendor/microboard/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/microboard/vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
