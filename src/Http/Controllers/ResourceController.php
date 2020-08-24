@@ -55,12 +55,13 @@ class ResourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param User $user
-     * @return Response
+     * @param string $resource
+     * @param int $resourceId
+     * @return View
      */
-    public function edit(User $user)
+    public function edit($resource, $resourceId)
     {
-        //
+        return view('microboard::resource.edit', compact('resource', 'resourceId'));
     }
 
     /**
