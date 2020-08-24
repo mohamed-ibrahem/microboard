@@ -7,6 +7,7 @@ use Microboard\Microboard;
 use Microboard\Providers\MicroboardCoreServiceProvider;
 use Microboard\Providers\MicroboardServiceProvider;
 use Microboard\Providers\ViewServiceProvider;
+use Microboard\Providers\MicroboardViewsServiceProvider;
 use Microboard\Tests\Fixtures\UserResource;
 use Orchestra\Testbench\TestCase;
 
@@ -30,8 +31,6 @@ abstract class IntegrationTest extends TestCase
         return [
             LivewireServiceProvider::class,
             MicroboardCoreServiceProvider::class,
-            MicroboardServiceProvider::class,
-            ViewServiceProvider::class
         ];
     }
 }

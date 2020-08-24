@@ -11,7 +11,7 @@ class TableTest extends IntegrationTest
 {
     protected function table()
     {
-        return Livewire::test('index-table', [
+        return Livewire::test('datatable', [
             'resource' => UserResource::class,
         ]);
     }

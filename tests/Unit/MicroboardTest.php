@@ -15,14 +15,6 @@ class MicroboardTest extends IntegrationTest
     }
 
     /** @test */
-    function it_returns_available_resources_for_navigation()
-    {
-        $this->assertNotEmpty(Microboard::availableResources());
-        UserResource::$displayInNavigation = false;
-        $this->assertEmpty(Microboard::availableResources());
-    }
-
-    /** @test */
     function it_get_resources_by_uri_key()
     {
         $this->assertEquals($uri = 'users', UserResource::uriKey());

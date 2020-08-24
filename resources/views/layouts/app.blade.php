@@ -6,7 +6,7 @@
         <div class="scrollbar-inner">
             <!-- Brand -->
             <div class="sidenav-header d-flex align-items-center">
-                @include ('microboard::partials.logo')
+                @include ('microboard::layouts.partials.logo')
 
                 <div class="ml-auto">
                     <!-- Sidenav toggler -->
@@ -35,7 +35,7 @@
         <!-- Top nav -->
         <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
             <div class="container-fluid">
-                @include ('microboard::partials.navbar')
+                @include ('microboard::layouts.partials.navbar')
             </div>
         </nav>
 
@@ -49,7 +49,7 @@
                                 <h6 class="h2 d-inline-block mb-0 text-white">@yield('title')</h6>
                             @endif
 
-                            @includeWhen(config('microboard.view.enable_breadcrumbs', true), 'microboard::partials.breadcrumb')
+                            @includeWhen(config('microboard.view.enable_breadcrumbs', true), 'microboard::layouts.partials.breadcrumb')
                         </div>
                         <div class="col-lg-4 col-12 text-right">
                             @yield('actions')

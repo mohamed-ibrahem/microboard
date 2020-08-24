@@ -16,18 +16,11 @@ class MicroboardApplicationServiceProvider extends ServiceProvider
     public function boot()
     {
         // $this->registerExceptionHandler();
-        $this->resources();
         // $this->authorization(); // TODO:: make it real.
-    }
 
-    /**
-     * Register the application's resources.
-     *
-     * @return void
-     */
-    protected function resources()
-    {
-        Microboard::resourcesIn(app_path('Microboard'));
+        Microboard::resourcesIn(
+            config('microboard.resource.path', app_path('Microboard'))
+        );
     }
 
     /**
@@ -61,13 +54,5 @@ class MicroboardApplicationServiceProvider extends ServiceProvider
     protected function cards()
     {
         return [];
-    }
-
-    /**
-     * Register the application services.
-     */
-    public function register()
-    {
-        $this->app->register(ViewServiceProvider::class);
     }
 }

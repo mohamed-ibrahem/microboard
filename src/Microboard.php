@@ -11,11 +11,15 @@ use Symfony\Component\Finder\Finder;
 class Microboard
 {
     /**
+     * Applications resource.
+     *
      * @var array
      */
     protected static $resources = [];
 
     /**
+     * Register all resource in this path.
+     *
      * @param $directory
      * @throws ReflectionException
      */
@@ -43,6 +47,8 @@ class Microboard
     }
 
     /**
+     * Merge given resources with actual resources.
+     *
      * @param array $resources
      * @return Microboard
      */
@@ -66,18 +72,8 @@ class Microboard
     }
 
     /**
-     * Return available resources for navigation.
+     * Get single resource bu given key.
      *
-     * @return Collection
-     */
-    public static function availableResources()
-    {
-        return static::resourceCollection()->filter(function ($resource) {
-            return $resource::availableForNavigation();
-        });
-    }
-
-    /**
      * @param string $uri
      * @return string
      */

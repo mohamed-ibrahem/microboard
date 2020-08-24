@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" wire:init="load">
     <div class="card-header">
         <div class="row justify-content-end">
             <div class="col-md-6">
@@ -14,7 +14,8 @@
                             <span class="fa fa-filter"></span>
                         </button>
 
-                        <div class="dropdown-menu py-0 mt-2 mx-2 overflow-hidden" aria-labelledby="table-filters-dropdown">
+                        <div class="dropdown-menu py-0 mt-2 mx-2 overflow-hidden"
+                             aria-labelledby="table-filters-dropdown">
                             <form>
                                 <div class="form-group px-3 mb-2">
                                     <label for="" class="bg-lighter d-block px-4 py-2 mx--3">Per page</label>
@@ -49,30 +50,20 @@
             <table class="table table-hover table align-items-center table-flush">
                 <thead class="thead-light">
                 <tr>
-                    @foreach($resources->first()['fields'] as $field)
-                        <th>
-                            <a href="#" role="button" wire:click.prevent="sortBy('{{ $field->attribute }}')">
-                                {{ $field->name }}
-
-                                @if ($sortField !== $field->attribute)
-                                    <i class="text-muted fas fa-sort"></i>
-                                @elseif ($ascSorting)
-                                    <i class="fas fa-sort-up"></i>
-                                @else
-                                    <i class="fas fa-sort-down"></i>
-                                @endif
-                            </a>
-                        </th>
+                    @foreach($resources->first() as $field)
+                        <th>{{ $field->name }}</th>
                     @endforeach
+
                     <th style="width: 10%;"></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($resources as $resource)
                     <tr>
-                        @foreach($resource['fields'] as $field)
-                            <td>{{ $field->value }}</td>
+                        @foreach($resource as $field)
+                            <th>{{ $field->name }}</th>
                         @endforeach
+
                         <td>
                             options...
                         </td>
@@ -83,7 +74,14 @@
         </div>
 
         <div class="card-footer">
-            {!! $resources->links('microboard::partials.pagination-links') !!}
+            {!! $resources->links() !!}
+        </div>
+    @elseif($readyToLoad)
+        <div class="card-body">
+            <div class="text-center h3 text-muted">
+                <div class="py-7 w-25 mx-auto mb-4 bg-gradient-warning"></div>
+                <strong>No data</strong> add new Data from here.
+            </div>
         </div>
     @endif
 </div>

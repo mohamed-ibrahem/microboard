@@ -2,7 +2,6 @@
 
 namespace Microboard\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class MicroboardCoreServiceProvider extends ServiceProvider
@@ -12,13 +11,38 @@ class MicroboardCoreServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->register(MicroboardServiceProvider::class);
+        if ($this->app->runningInConsole()) {
+            $this->registerPublishing();
+            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        }
 
         if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__ . '/../../config/config.php', 'microboard');
         }
 
-        Route::middlewareGroup('microboard', config('microboard.middleware', []));
+        $this->registerResources();
+    }
+
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    protected function registerPublishing()
+    {
+        //
+    }
+
+    /**
+     * Register the package resources such as routes, templates, etc.
+     *
+     * @return void
+     */
+    protected function registerResources()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'microboard');
+        // $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'microboard');
+        // $this->loadJsonTranslationsFrom(resource_path('lang/vendor/microboard'));
     }
 
     /**
@@ -26,6 +50,7 @@ class MicroboardCoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(MicroboardViewsServiceProvider::class);
+        $this->app->register(MicroboardRouteServiceProvider::class);
     }
 }

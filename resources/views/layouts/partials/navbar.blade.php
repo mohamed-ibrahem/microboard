@@ -52,7 +52,7 @@
                     <h6 class="text-overflow m-0">Welcome!</h6>
                 </div>
 
-                @include ('microboard::partials.user')
+                @include ('microboard::layouts.partials.user')
             </div>
         </li>
     </ul>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Microboard\View\Livewire;
+namespace Microboard\Http\Livewire;
 
 use Illuminate\View\View;
 use Livewire\Component;
@@ -8,7 +8,7 @@ use Livewire\Component;
 class GlobalSearch extends Component
 {
     /**
-     * Return view.
+     * Render the component's view.
      *
      * @return View
      */
