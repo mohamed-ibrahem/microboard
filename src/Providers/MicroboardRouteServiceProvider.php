@@ -26,8 +26,8 @@ class MicroboardRouteServiceProvider extends ServiceProvider
 
         Route::middlewareGroup('microboard', config('microboard.middleware', []));
 
-        Route::bind('resource', function($value) {
-            return tap(Microboard::resourceForKey($value), function($resource) {
+        Route::bind('resource', function ($value) {
+            return tap(Microboard::resourceForKey($value), function ($resource) {
                 abort_if(is_null($resource), 404);
             });
         });

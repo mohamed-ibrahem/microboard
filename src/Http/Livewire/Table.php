@@ -56,7 +56,7 @@ class Table extends Component
     {
         $this->resource = $resource;
         $this->perPageOptions = $resource::perPageOptions();
-        $this->perPage = request('perPage', $this->perPageOptions[0]);;
+        $this->perPage = request('perPage', $this->perPageOptions[0]);
         $this->ascSorting = request('ascSorting');
         $this->search = request('search');
         $this->sortField = request('sortField');
@@ -125,7 +125,7 @@ class Table extends Component
             "microboard.resource.{$route}",
             [
                 'resource' => $this->resource::uriKey(),
-                'resourceId' => $resourceId
+                'resourceId' => $resourceId,
             ]
         );
     }
@@ -140,7 +140,7 @@ class Table extends Component
         return view('microboard::livewire.table', [
             'resources' => $this->readyToLoad ?
                 $this->getResources() :
-                []
+                [],
         ]);
     }
 }

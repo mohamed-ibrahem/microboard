@@ -4,7 +4,6 @@ namespace Microboard\Http\Livewire;
 
 use Illuminate\View\View;
 use Livewire\Component;
-use Microboard\Microboard;
 
 class SidebarLinks extends Component
 {
