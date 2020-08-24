@@ -111,7 +111,7 @@ abstract class Resource
 
     /**
      * @param mixed $id
-     * @return Resource
+     * @return $this
      */
     public static function newResourceWith($id)
     {
