@@ -43,11 +43,10 @@ trait Visibilable
      */
     public function hideFromIndex($callback = true)
     {
-        $this->showOnIndex = is_callable($callback) ?
-            function () use ($callback) {
-                return ! call_user_func_array($callback, func_get_args());
-            } :
-            ! $callback;
+        $this->showOnIndex = is_callable($callback) ? function () use ($callback) {
+            return ! call_user_func_array($callback, func_get_args());
+        }
+            : ! $callback;
 
         return $this;
     }
@@ -60,11 +59,10 @@ trait Visibilable
      */
     public function hideFromDetail($callback = true)
     {
-        $this->showOnDetail = is_callable($callback) ?
-            function () use ($callback) {
-                return ! call_user_func_array($callback, func_get_args());
-            } :
-            ! $callback;
+        $this->showOnDetail = is_callable($callback) ? function () use ($callback) {
+            return ! call_user_func_array($callback, func_get_args());
+        }
+            : ! $callback;
 
         return $this;
     }
@@ -77,11 +75,10 @@ trait Visibilable
      */
     public function hideWhenCreating($callback = true)
     {
-        $this->showOnCreation = is_callable($callback) ?
-            function () use ($callback) {
-                return ! call_user_func_array($callback, func_get_args());
-            } :
-            ! $callback;
+        $this->showOnCreation = is_callable($callback) ? function () use ($callback) {
+            return ! call_user_func_array($callback, func_get_args());
+        }
+            : ! $callback;
 
         return $this;
     }
@@ -94,11 +91,10 @@ trait Visibilable
      */
     public function hideWhenUpdating($callback = true)
     {
-        $this->showOnUpdate = is_callable($callback) ?
-            function () use ($callback) {
-                return ! call_user_func_array($callback, func_get_args());
-            } :
-            ! $callback;
+        $this->showOnUpdate = is_callable($callback) ? function () use ($callback) {
+            return ! call_user_func_array($callback, func_get_args());
+        }
+            : ! $callback;
 
         return $this;
     }
