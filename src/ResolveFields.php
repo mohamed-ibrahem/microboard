@@ -20,7 +20,7 @@ trait ResolveFields
         return [
             'resource' => $this->resource,
             'id' => $fields->whereInstanceOf(ID::class)->first()->toArray() ?? ID::forModel($this->resource)->toArray(),
-            'fields' => $fields->map->toArray()->all()
+            'fields' => $fields->map->toArray()->all(),
         ];
     }
 
@@ -32,7 +32,7 @@ trait ResolveFields
     {
         return $this->availableFields('update', $request)
             ->each->resolveForDisplay($this->resource)
-            ->reject(function ($field) use ($request) {
+            ->reject(function ($field) {
                 return $field instanceof ID && $field->attribute === $this->resource->getKeyName();
             })
             ->keyBy('attribute')

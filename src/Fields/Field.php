@@ -213,7 +213,7 @@ abstract class Field
             'sortable' => $this->sortable,
             'rules' => [
                 'required',
-            ]
+            ],
         ];
     }
 }
