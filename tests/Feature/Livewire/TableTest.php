@@ -9,11 +9,16 @@ use Microboard\Tests\IntegrationTest;
 
 class TableTest extends IntegrationTest
 {
+    /**
+     * @return \Livewire\Testing\Concerns\MakesCallsToComponent
+     */
     protected function table()
     {
         return Livewire::test('datatable', [
             'resource' => UserResource::class,
-        ]);
+        ])
+            ->set('readyToLoad', true)
+            ->set('perPage', 25);
     }
 
     /** @test */

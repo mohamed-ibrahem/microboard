@@ -1,7 +1,12 @@
 <div class="card" wire:init="load">
     <div class="card-header">
-        <div class="row justify-content-end">
-            <div class="col-md-6">
+        <div class="row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <button class="btn btn-danger btn-sm" type="button">
+                    <span class="fa fa-trash mr-1"></span> (5)
+                </button>
+            </div>
+            <div class="col-sm-6">
                 <div class="d-flex justify-content-end">
                     <div class="dropdown">
                         <button class="btn btn-light btn-sm"
@@ -29,7 +34,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 flex-grow-1 flex-sm-grow-0">
                         <div class="input-group input-group-sm input-group-merge">
                             <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -50,8 +55,32 @@
             <table class="table table-hover table align-items-center table-flush">
                 <thead class="thead-light">
                 <tr>
-                    @foreach($resources->first() as $field)
-                        <th>{{ $field->name }}</th>
+                    <th style="width: 1%">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"
+                                   id="select_all_resources">
+                            <label class="custom-control-label" for="select_all_resources"></label>
+                        </div>
+                    </th>
+
+                    @foreach($resources->first()['fields'] as $field)
+                        <th style="width: {{ $field->meta['width'] ?? '15%' }}">
+                            @if ($field->sortable)
+                                <a href="javascript:;" wire:click.prevent="sortBy('{{ $field->attribute }}')">
+                                    {{ $field->name }}
+
+                                    @if ($sortField !== $field->attribute)
+                                        <i class="text-muted fas fa-sort"></i>
+                                    @elseif ($ascSorting)
+                                        <i class="text-primary fas fa-sort-up"></i>
+                                    @else
+                                        <i class="text-primary fas fa-sort-down"></i>
+                                    @endif
+                                </a>
+                            @else
+                                {{ $field->name }}
+                            @endif
+                        </th>
                     @endforeach
 
                     <th style="width: 10%;"></th>
@@ -60,12 +89,39 @@
                 <tbody>
                 @foreach($resources as $resource)
                     <tr>
-                        @foreach($resource as $field)
-                            <th>{{ $field->name }}</th>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox"
+                                       name="selected[]"
+                                       value="{{ $resource['id']->value }}"
+                                       class="custom-control-input"
+                                       id="resource_{{ $resource['id']->value }}">
+                                <label class="custom-control-label" for="resource_{{ $resource['id']->value }}"></label>
+                            </div>
+                        </td>
+                        @foreach($resource['fields'] as $field)
+                            <td>
+                                @includeFirst([$field->component(), 'microboard::fields.default'])
+                            </td>
                         @endforeach
 
-                        <td>
-                            options...
+                        <td class="text-right">
+                            <a href="javascript:;"
+                               wire:click.prevent="gotTo('show', {{ $resource['id']->value }})"
+                               class="btn btn-sm btn-primary mx-0"
+                            >
+                                <span class="fa fa-eye"></span>
+                            </a>
+                            <a href="javascript:;"
+                               wire:click.prevent="gotTo('edit', {{ $resource['id']->value }})"
+                               class="btn btn-sm btn-warning mx-0"
+                            >
+                                <span class="fa fa-edit"></span>
+                            </a>
+
+                            <a href="" class="btn btn-sm btn-danger mx-0">
+                                <span class="fa fa-trash"></span>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

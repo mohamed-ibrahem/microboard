@@ -108,12 +108,12 @@ class Table extends Component
         $resource = $this->resource;
 
         return tap($resource::buildIndexQuery(
-            [$this->sortField, (bool)$this->ascSorting],
+            [$this->sortField => (bool)$this->ascSorting],
             $this->search,
             $this->perPage
         ), function ($paginator) use ($resource) {
             return $paginator->getCollection()->transform(function ($item) use ($resource) {
-                return (new $resource($item))->fields(request());
+                return (new $resource($item))->indexFields(request());
             });
         });
     }
@@ -126,6 +126,23 @@ class Table extends Component
     public function paginationView()
     {
         return 'microboard::layouts.partials.pagination-links';
+    }
+
+    /**
+     * Navigate to resource's route with id.
+     *
+     * @param string $route
+     * @param int $resourceId
+     */
+    public function gotTo($route, $resourceId)
+    {
+        $this->redirectRoute(
+            "microboard.resource.{$route}",
+            [
+                'resource' => $this->resource::uriKey(),
+                'resourceId' => $resourceId
+            ]
+        );
     }
 
     /**
