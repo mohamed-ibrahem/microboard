@@ -8,7 +8,7 @@ use Livewire\WithPagination;
 
 class Table extends Component
 {
-    use WithPagination;
+    use WithPagination, DeferLoading;
 
     /**
      * @var string
@@ -41,11 +41,6 @@ class Table extends Component
     public $perPageOptions = [];
 
     /**
-     * @var bool
-     */
-    public $readyToLoad = false;
-
-    /**
      * @var string[]
      */
     protected $updatesQueryString = [
@@ -65,16 +60,6 @@ class Table extends Component
         $this->ascSorting = request('ascSorting');
         $this->search = request('search');
         $this->sortField = request('sortField');
-    }
-
-    /**
-     * Change readyToLoad status as soon as the component is rendered.
-     *
-     * @return void
-     */
-    public function load()
-    {
-        $this->readyToLoad = true;
     }
 
     /**
