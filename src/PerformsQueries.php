@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Builder;
 trait PerformsQueries
 {
     /**
+     * Initialize the query builder.
+     *
      * @return Builder
      */
     protected static function initializeQuery()
@@ -14,6 +16,14 @@ trait PerformsQueries
         return static::newModel()->newQuery();
     }
 
+    /**
+     * Build index query with orderings, search and per page option.
+     *
+     * @param array $orderings
+     * @param string|null $search
+     * @param int|null $perPage
+     * @return mixed
+     */
     public static function buildIndexQuery($orderings, $search = null, $perPage = null)
     {
         return static::applySearch(
@@ -27,6 +37,13 @@ trait PerformsQueries
         });
     }
 
+    /**
+     * Apply the search query to the query.
+     *
+     * @param Builder $query
+     * @param string $search
+     * @return Builder
+     */
     protected static function applySearch($query, $search = null)
     {
         if (! $search) {
@@ -42,6 +59,13 @@ trait PerformsQueries
         });
     }
 
+    /**
+     * Apply any applicable orderings to the query.
+     *
+     * @param Builder $query
+     * @param array $orderings
+     * @return Builder
+     */
     protected static function applyOrderings($query, $orderings)
     {
         $orderings = array_filter($orderings);
@@ -63,7 +87,7 @@ trait PerformsQueries
      * Index query builder, you can override from your actual resource.
      *
      * @param Builder $query
-     * @return mixed
+     * @return Builder
      */
     public static function indexQuery($query)
     {
