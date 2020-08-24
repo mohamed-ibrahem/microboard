@@ -44,12 +44,13 @@ class ResourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param User $user
-     * @return Response
+     * @param string $resource
+     * @param int $resourceId
+     * @return View
      */
-    public function show(User $user)
+    public function show($resource, $resourceId)
     {
-        //
+        return view('microboard::resource.show', compact('resource', 'resourceId'));
     }
 
     /**
