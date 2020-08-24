@@ -125,7 +125,7 @@ class Table extends Component
             "microboard.resource.{$route}",
             [
                 'resource' => $this->resource::uriKey(),
-                'resourceId' => $resourceId
+                'resourceId' => $resourceId,
             ]
         );
     }
@@ -140,7 +140,7 @@ class Table extends Component
         return view('microboard::livewire.table', [
             'resources' => $this->readyToLoad ?
                 $this->getResources() :
-                []
+                [],
         ]);
     }
 }
