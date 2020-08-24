@@ -19,9 +19,25 @@ trait ResolveFields
 
         return [
             'resource' => $this->resource,
-            'id' => $fields->whereInstanceOf(ID::class)->first() ?? ID::forModel($this->resource),
-            'fields' => $fields->all()
+            'id' => $fields->whereInstanceOf(ID::class)->first()->toArray() ?? ID::forModel($this->resource)->toArray(),
+            'fields' => $fields->map->toArray()->all()
         ];
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function updateFields(Request $request)
+    {
+        return $this->availableFields('update', $request)
+            ->each->resolveForDisplay($this->resource)
+            ->reject(function ($field) use ($request) {
+                return $field instanceof ID && $field->attribute === $this->resource->getKeyName();
+            })
+            ->keyBy('attribute')
+            ->map->toArray()
+            ->all();
     }
 
     /**

@@ -110,6 +110,17 @@ abstract class Resource
     }
 
     /**
+     * @param mixed $id
+     * @return Resource
+     */
+    public static function newResourceWith($id)
+    {
+        return new static(
+            static::newModel()->findOrFail($id)
+        );
+    }
+
+    /**
      * Get a fresh instance of the model represented by the resource.
      *
      * @return Model

@@ -124,6 +124,16 @@ abstract class Field
     }
 
     /**
+     * Get input key.
+     *
+     * @return string
+     */
+    protected function key()
+    {
+        return "fields.{$this->attribute}.value";
+    }
+
+    /**
      * Resolve the field's value for display.
      *
      * @param Model $resource
@@ -185,5 +195,24 @@ abstract class Field
     {
         return (is_callable($this->attribute) && ! is_string($this->attribute)) ||
             $this->attribute == 'ComputedField';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function toArray()
+    {
+        return [
+            'component' => $this->component(),
+            'attribute' => $this->attribute,
+            'key' => $this->key(),
+            'name' => $this->name,
+            'value' => $this->value,
+            'meta' => $this->meta(),
+            'sortable' => $this->sortable,
+            'rules' => [
+                'required',
+            ]
+        ];
     }
 }

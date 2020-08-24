@@ -64,12 +64,12 @@
                     </th>
 
                     @foreach($resources->first()['fields'] as $field)
-                        <th style="width: {{ $field->meta['width'] ?? '15%' }}">
-                            @if ($field->sortable)
-                                <a href="javascript:;" wire:click.prevent="sortBy('{{ $field->attribute }}')">
-                                    {{ $field->name }}
+                        <th style="width: {{ $field['meta']['width'] ?? '15%' }}">
+                            @if ($field['sortable'])
+                                <a href="javascript:;" wire:click.prevent="sortBy('{{ $field['attribute'] }}')">
+                                    {{ $field['name'] }}
 
-                                    @if ($sortField !== $field->attribute)
+                                    @if ($sortField !== $field['attribute'])
                                         <i class="text-muted fas fa-sort"></i>
                                     @elseif ($ascSorting)
                                         <i class="text-primary fas fa-sort-up"></i>
@@ -78,7 +78,7 @@
                                     @endif
                                 </a>
                             @else
-                                {{ $field->name }}
+                                {{ $field['name'] }}
                             @endif
                         </th>
                     @endforeach
@@ -93,27 +93,27 @@
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox"
                                        name="selected[]"
-                                       value="{{ $resource['id']->value }}"
+                                       value="{{ $resource['id']['value'] }}"
                                        class="custom-control-input"
-                                       id="resource_{{ $resource['id']->value }}">
-                                <label class="custom-control-label" for="resource_{{ $resource['id']->value }}"></label>
+                                       id="resource_{{ $resource['id']['value'] }}">
+                                <label class="custom-control-label" for="resource_{{ $resource['id']['value'] }}"></label>
                             </div>
                         </td>
                         @foreach($resource['fields'] as $field)
                             <td>
-                                @includeFirst([$field->component(), 'microboard::fields.default'])
+                                @includeFirst([$field['component'], 'microboard::fields.default'])
                             </td>
                         @endforeach
 
                         <td class="text-right">
                             <a href="javascript:;"
-                               wire:click.prevent="gotTo('show', {{ $resource['id']->value }})"
+                               wire:click.prevent="gotTo('show', {{ $resource['id']['value'] }})"
                                class="btn btn-sm btn-primary mx-0"
                             >
                                 <span class="fa fa-eye"></span>
                             </a>
                             <a href="javascript:;"
-                               wire:click.prevent="gotTo('edit', {{ $resource['id']->value }})"
+                               wire:click.prevent="gotTo('edit', {{ $resource['id']['value'] }})"
                                class="btn btn-sm btn-warning mx-0"
                             >
                                 <span class="fa fa-edit"></span>
