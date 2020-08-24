@@ -46,7 +46,8 @@ trait Visibilable
         $this->showOnIndex = is_callable($callback) ?
             function () use ($callback) {
                 return ! call_user_func_array($callback, func_get_args());
-            } :
+            }
+        :
             ! $callback;
 
         return $this;
@@ -63,7 +64,8 @@ trait Visibilable
         $this->showOnDetail = is_callable($callback) ?
             function () use ($callback) {
                 return ! call_user_func_array($callback, func_get_args());
-            } :
+            }
+        :
             ! $callback;
 
         return $this;
@@ -80,7 +82,8 @@ trait Visibilable
         $this->showOnCreation = is_callable($callback) ?
             function () use ($callback) {
                 return ! call_user_func_array($callback, func_get_args());
-            } :
+            }
+        :
             ! $callback;
 
         return $this;
@@ -97,7 +100,8 @@ trait Visibilable
         $this->showOnUpdate = is_callable($callback) ?
             function () use ($callback) {
                 return ! call_user_func_array($callback, func_get_args());
-            } :
+            }
+        :
             ! $callback;
 
         return $this;
