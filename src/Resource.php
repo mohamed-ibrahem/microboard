@@ -3,6 +3,7 @@
 namespace Microboard;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 abstract class Resource
@@ -75,6 +76,7 @@ abstract class Resource
         return 'fa fa-database text-primary';
     }
 
+    /**
      * Get the searchable columns for the resource.
      *
      * @return array
