@@ -5,6 +5,7 @@ namespace Microboard\Fields;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Microboard\Resource;
 
 abstract class Field
 {
@@ -101,7 +102,7 @@ abstract class Field
     /**
      * Specify that this field should be sortable.
      *
-     * @param  bool  $value
+     * @param bool $value
      * @return $this
      */
     public function sortable($value = true)

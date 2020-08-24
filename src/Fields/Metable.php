@@ -24,7 +24,7 @@ trait Metable
     /**
      * Set additional meta information for the element.
      *
-     * @param  array  $meta
+     * @param array $meta
      * @return $this
      */
     public function withMeta(array $meta)
