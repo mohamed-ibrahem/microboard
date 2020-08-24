@@ -8,7 +8,8 @@ use Illuminate\Support\Str;
 
 abstract class Resource
 {
-    use PerformsQueries;
+    use PerformsQueries,
+        ResolveFields;
 
     /**
      * The underlying model resource instance.
